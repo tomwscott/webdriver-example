@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "title";
+}
+
+<h2>Preferences</h2>
+
+<p>Please select your favourite technology</p>
+
+<form action="@Url.Action("answers")" method="POST">
+    <ul>
+        <li>
+            <label for="fortran">Fortran</label>
+            <input type="checkbox" name="fortran" id="fortran"/>
+        </li>
+
+        <li>
+            <label for="cobol">Cobol</label>
+            <input type="checkbox" name="cobol" id="cobol"/>
+        </li>
+
+        <li>
+            <label for="dot-net">.NET</label>
+            <input type="checkbox" name="dot-net" id="dot-net"/>
+        </li>
+
+    </ul>
+
+    <button id="next-button">Next ></button>
+</form>

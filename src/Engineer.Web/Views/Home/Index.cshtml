@@ -1,0 +1,18 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Welcome Home</h2>
+
+<p>
+    This is the home page for the WebDriver demonstration...
+</p>
+
+<form action="@Url.Action("personaldetails", "questions")" method="GET">
+    
+    <button>
+        Next >
+    </button>
+</form>

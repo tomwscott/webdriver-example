@@ -1,0 +1,23 @@
+﻿h1, h2, h3, h4 {
+    font-family: 'Fredericka the Great', cursive;
+}
+
+body, 
+button, 
+input[type="text"], 
+input[type="date"], 
+label {
+    font-family: 'Glass Antiqua', cursive;
+    font-size: 20px;
+}
+
+label, 
+input[type="text"], 
+input[type="date"] 
+{
+    display: inline-block;
+}
+
+label {
+    width: 120px;
+}

@@ -1,0 +1,72 @@
+﻿require 'albacore'
+
+@web_journey_dir = "src/Web.Journey/bin/Debug"
+@engineer_journey_dir = "src/Engineer.Journey/bin/Debug"
+@integration_test_dir = "src/Home.Integration.Tests/bin/Debug"
+@feature_test_dir = "src/Home.Feature.Tests/bin/Debug"
+@user_journey_test_dir = "src/Home.User.Journeys/bin/Debug"
+@deployer = "src/Home.Deployer/bin/debug/Home.Deployer.exe"
+@version_dir = "src/Engineer.Version"
+@time = Time.now 
+
+task :default  => [:start, :compile, :run_unit_tests, :end]
+
+Albacore.configure do |config|
+  config.log_level = :debug
+  
+  config.msbuild do |msb|
+    msb.use :net40
+	msb.configuration = :Debug
+	msb.solution = "src/Engineer.sln"
+  end
+  
+  config.nunit do | nunit |
+    nunit.command = "Tools/NUnit/bin/nunit-console.exe"
+    nunit.options = "/framework v4.0.30319", "/nologo", "/noshadow", "/out:TestResult.txt"
+  end
+end
+
+desc "Run a sample build using the MSBuildTask"
+msbuild :compile => :assemblyinfo do |msb|
+  msb.properties :configuration => :Debug
+  msb.targets :Clean, :Build 	
+end
+
+assemblyinfo :assemblyinfo do |asm|
+  mkdir @version_dir unless File.exists?(@version_dir)
+  
+  asm.version = "0.1.1.1" #TODO --- get correct versions
+  asm.company_name = "Compare the Market"
+  asm.product_name = "Home"
+  asm.title = "CompareTheMarket - Home"
+  asm.description = "Home Component"
+  asm.copyright = "Copyright CompareTheMarket"
+  asm.output_file = @version_dir + "/AssemblyInfo.cs"
+end
+
+desc "Run Engineer Journeys"
+nunit :run_engineer_journeys do | nunit | 
+  puts "\n[TEST] Running unit tests..\n"
+  nunit.working_directory = @engineer_journey_dir
+  nunit.assemblies "Engineer.Journeys.dll"
+end
+
+desc "Run Web Journeys"
+nunit :run_web_journeys do | nunit | 
+  puts "\n[TEST] Running unit tests..\n"
+  nunit.working_directory = @web_journey_dir
+  nunit.assemblies "Web.Journeys.dll"
+end
+
+task :start do
+	puts "\n============================================ Sterling Build ==================================================\n" 
+	puts "\n[#{DateTime.now.strftime("%d %b %H:%M")}] - Starting Build... \n"
+end
+
+task :end  do
+	sh 'more Tools\buildflags\passed.txt'	
+	endofbuildtime = Time.now
+	puts "\n[#{DateTime.now.strftime("%d %b %H:%M")}] - Build Complete" 
+	puts "[THE END] Duration: " << (endofbuildtime - @time).to_s << " seconds"
+	puts "\n================================================================================================================\n" 
+end

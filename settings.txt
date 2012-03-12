@@ -1,0 +1,8 @@
+browser.startup.homepage;about:blank
+extensions.update.notifyUser (type=boolean; value=false)
+extensions.newAddons;false
+browser.cache.disk.smart_size.enabled;false
+browser.cache.disk.smart_size.first_run;false
+browser.cache.disk.capacity;0
+services.sync.engine.bookmarks;true
+general.autoScroll;false

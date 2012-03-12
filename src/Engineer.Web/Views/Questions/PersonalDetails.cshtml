@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Personal Details";
+}
+
+<h2>Personal Details</h2>
+
+<p>Please enter your personal details in the form below</p>
+
+<form action="@Url.Action("answers")" method="POST">
+    <ul>
+        <li>
+            <label for="first-name">First Name</label>
+            <input type="text" name="first-name" id="first-name"/>
+        </li>
+    
+        <li>
+            <label for="last-name">Last Name</label>
+            <input type="text" name="last-name" id="last-name"/>
+        </li>
+        
+        <li>
+            <label for="date-of-birth">Date of Birth</label>
+            <input type="date" name="date-of-birth" id="date-of-birth"/>
+
+        </li>
+
+    </ul>
+    
+
+    <button id="next-button">Next ></button>
+</form>
